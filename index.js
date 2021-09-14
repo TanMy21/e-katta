@@ -8,7 +8,9 @@ const port = 5000;
 app.use('/', require('./routes'));
 
 
-
+//set up the view engine
+app.set('view engine', 'ejs');
+app.set('views', './views');
 
 
 
