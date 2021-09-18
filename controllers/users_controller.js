@@ -1,4 +1,7 @@
 const User = require("../models/user");
+const fs = require('fs');
+const path = require('path');
+
 
 //render profile page
 module.exports.profile = function (req, res) {
