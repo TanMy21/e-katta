@@ -9,9 +9,10 @@ module.exports.createPost = function (req, res) {
     },
     function (err, post) {
       if (err) {
-        console.log("error in creating post");
-        return;
+        req.flash('error', err);
+        return res.redirect("back");
       }
+      req.flash('success', 'Post Published');
       return res.redirect("back");
     }
   );
@@ -27,14 +28,20 @@ module.exports.destroyPost = async function (req, res) {
           post.remove();
     
           await Comment.deleteMany({ post: req.params.id });
-            return res.redirect("back");
+          
+          req.flash('success', 'Post is deleted');
+
+          
+          return res.redirect("back");
+
           
         } else {
+          req.flash('error', 'You Cannot delete this post');
           return res.redirect("back");
         }
     } catch(err) {
-        console.log("Error", err);
-        return;
+        req.flash('error', err);
+        return res.redirect("back");
     }
  
 };
