@@ -17,17 +17,25 @@ module.exports.createPost = function (req, res) {
   );
 };
 
-module.exports.destroyPost = function (req, res) {
-  Post.findById(req.params.id, function (error, post) {
-    // .id means converting the object id into string
-    if (post.user == req.user.id) {
-      post.remove();
+module.exports.destroyPost = async function (req, res) {
 
-      Comment.deleteMany({ post: req.params.id }, function (err) {
-        return res.redirect("back");
-      });
-    } else {
-      return res.redirect("back");
+    try{
+      let post = await Post.findById(req.params.id);
+     
+        // .id means converting the object id into string
+        if (post.user == req.user.id) {
+          post.remove();
+    
+          await Comment.deleteMany({ post: req.params.id });
+            return res.redirect("back");
+          
+        } else {
+          return res.redirect("back");
+        }
+    } catch(err) {
+        console.log("Error", err);
+        return;
     }
-  });
+ 
 };
+
