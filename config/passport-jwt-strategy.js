@@ -8,8 +8,8 @@ const User = require('../models/user');
 
 
 let opts = {
-    jswtFrosRequest: ExtractJWT.fromAuthHeaderAsBearerToken,
-    secretOrKey = 'eekkeekkkke'
+    jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
+    secretOrKey: 'eekkeekkkke'
 }
 
 
